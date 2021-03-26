@@ -7,7 +7,7 @@
 Show all intervention without a start date and are pending
 ![picture](image/GET.png)
 
-# GET None Completed or Started
+# PUT DateTime
 /api/Intervention/{id}/{status}
 
 Change intervention to desired {status} and timestamp it
