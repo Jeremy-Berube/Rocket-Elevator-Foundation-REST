@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Rocket_Elevator_Foundation_REST.Models;
 
+
 namespace Rocket_Elevator_Foundation_REST.Controllers
 {
     [Route("api/[controller]")]
@@ -22,54 +23,59 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
 
         // GET: api/Intervention
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Intervention>>> GetInterventions()
+         public ActionResult<IEnumerable<Intervention>> Getinterventions()
         {
-            return await _context.Interventions.ToListAsync();
-        }
-
-        // GET: api/Intervention/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Intervention>> GetIntervention(long id)
-        {
-            var intervention = await _context.Interventions.FindAsync(id);
-
-            if (intervention == null)
-            {
-                return NotFound();
+            List<Intervention> allInterventions = _context.Interventions.ToList();
+            List<Intervention> pendingInterventions = new List<Intervention>();
+            foreach(Intervention intervention in allInterventions) {
+                if (intervention.intervention_start == null && intervention.Status == "Pending") {
+                    pendingInterventions.Add(intervention);
+                    Console.WriteLine(pendingInterventions.ToList());
+                }
             }
-
-            return intervention;
+            return pendingInterventions.ToList();
         }
+
+        // // GET: api/Intervention/5
+        // [HttpGet("{id}")]
+        // public async Task<ActionResult<Intervention>> GetIntervention(long id)
+        // {
+        //     var intervention = await _context.Interventions.FindAsync(id);
+
+        //     if (intervention == null)
+        //     {
+        //         return NotFound();
+        //     }
+
+        //     return intervention;
+        // }
 
         // PUT: api/Intervention/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutIntervention(long id, Intervention intervention)
+        [HttpPut("{id}/{status}")]
+        public async Task<ActionResult<Intervention>> StartIntervention(long id, string status)
         {
-            if (id != intervention.Id)
+            if(status == "InProgress")
             {
-                return BadRequest();
-            }
-
-            _context.Entry(intervention).State = EntityState.Modified;
-
-            try
-            {
+                var intervention = await _context.Interventions.FindAsync(id);
+                intervention.Status = status;
+                intervention.intervention_start = DateTime.Now;
+                // Console.WriteLine(intervention);
                 await _context.SaveChangesAsync();
+                Console.WriteLine(intervention.intervention_start);
+                return intervention;
+                // Console.WriteLine(intervention);
             }
-            catch (DbUpdateConcurrencyException)
+            else if(status == "Completed")
             {
-                if (!InterventionExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                var intervention = await _context.Interventions.FindAsync(id);
+                intervention.Status = status;
+                intervention.intervention_end = DateTime.Now;
+                await _context.SaveChangesAsync();
+                Console.WriteLine(intervention.intervention_end);
+                return intervention;
             }
-
-            return NoContent();
+            return Ok("Invalid");
         }
 
         // POST: api/Intervention

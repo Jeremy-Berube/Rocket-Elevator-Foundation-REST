@@ -8,6 +8,7 @@ namespace Rocket_Elevator_Foundation_REST.Models
 {
     public partial class RailsApp_developmentContext : DbContext
     {
+
         public RailsApp_developmentContext()
         {
         }
@@ -446,6 +447,14 @@ namespace Rocket_Elevator_Foundation_REST.Models
                 entity.Property(e => e.Id)
                     .HasColumnType("bigint(20)")
                     .HasColumnName("id");
+
+                entity.Property(e => e.intervention_start)
+                    .HasColumnType("DateTime")
+                    .HasColumnName("intervention_start");
+
+                entity.Property(e => e.intervention_end)
+                    .HasColumnType("DateTime")
+                    .HasColumnName("intervention_end");
 
                 entity.Property(e => e.Author)
                     .HasColumnType("bigint(20)")
