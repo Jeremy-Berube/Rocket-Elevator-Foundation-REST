@@ -50,7 +50,7 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
         //     return intervention;
         // }
 
-        // PUT: api/Intervention/5
+        // PUT: api/Intervention/{id}/{status}
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}/{status}")]
         public async Task<ActionResult<Intervention>> StartIntervention(long id, string status)
