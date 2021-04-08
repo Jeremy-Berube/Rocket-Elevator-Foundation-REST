@@ -45,36 +45,23 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
             return customer;
         }
 
-        // PUT: api/Customer/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> PutCustomer(long id, Customer customer)
-        // {
-        //     if (id != customer.Id)
-        //     {
-        //         return BadRequest();
-        //     }
+            // GET: api/Customers/Test@test.com
+            [HttpGet("{email}")]
+            public async Task<ActionResult<Customer>> GetCustomer(string email)
+            {
+            var _customers = await _context.Customers.ToListAsync();
 
-        //     _context.Entry(customer).State = EntityState.Modified;
-
-        //     try
-        //     {
-        //         await _context.SaveChangesAsync();
-        //     }
-        //     catch (DbUpdateConcurrencyException)
-        //     {
-        //         if (!CustomerExists(id))
-        //         {
-        //             return NotFound();
-        //         }
-        //         else
-        //         {
-        //             throw;
-        //         }
-        //     }
-
-        //     return NoContent();
-        // }
+            foreach (Customer customers in _customers)
+            {
+                if (customers.EmailOfCompanyContact == email)
+                {
+                return Ok(true);
+                }
+            }
+            return Ok(false);
+            }
+            }
+        }
 
         // POST: api/Customer
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -103,9 +90,3 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
         //     return NoContent();
         // }
 
-        private bool CustomerExists(long id)
-        {
-            return _context.Customers.Any(e => e.Id == id);
-        }
-    }
-}
