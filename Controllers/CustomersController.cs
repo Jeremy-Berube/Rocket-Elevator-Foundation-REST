@@ -11,44 +11,20 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class CustomersController : ControllerBase
     {
         private readonly RailsApp_developmentContext _context;
 
-        public CustomerController(RailsApp_developmentContext context)
+        public CustomersController(RailsApp_developmentContext context)
         {
             _context = context;
         }
 
-        // GET: api/Customer
-        [HttpGet]
-        public IEnumerable<Customer> GetCustomers_email()
+    
+            // GET: api/Customer/Test@test.com
+        [HttpGet("{email}")]
+        public async Task<ActionResult<Customer>> GetCustomer(string email)
         {
-            IQueryable<Customer> Customers = from list_cust in _context.Customers
-                                             where list_cust.EmailOfCompanyContact != null
-                                             select list_cust;
-
-            return Customers.ToList();
-        }
-
-        // GET: api/Customer/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Customer>> GetCustomer(long id)
-        {
-            var customer = await _context.Customers.FindAsync(id);
-
-            if (customer == null)
-            {
-                return NotFound();
-            }
-
-            return customer;
-        }
-
-            // GET: api/Customers/Test@test.com
-            [HttpGet("{email}")]
-            public async Task<ActionResult<Customer>> GetCustomer(string email)
-            {
             var _customers = await _context.Customers.ToListAsync();
 
             foreach (Customer customers in _customers)
@@ -59,9 +35,22 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
                 }
             }
             return Ok(false);
-            }
-            }
         }
+        [HttpGet("{name}/id")]
+        public async Task<ActionResult<Customer>> GetCustomerName(string name)
+        {
+            var _customers = await _context.Customers.ToListAsync();
+           foreach (Customer customer in _customers)
+            {
+                if (customer.EmailOfCompanyContact == name)
+                {
+                return Ok(customer.Id);
+                }
+            }
+            return Ok(null);
+        }
+    }
+}
 
         // POST: api/Customer
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
