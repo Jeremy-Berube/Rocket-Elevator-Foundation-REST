@@ -80,14 +80,14 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
 
         // POST: api/Intervention
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        // [HttpPost]
-        // public async Task<ActionResult<Intervention>> PostIntervention(Intervention intervention)
-        // {
-        //     _context.Interventions.Add(intervention);
-        //     await _context.SaveChangesAsync();
+        [HttpPost]
+        public async Task<ActionResult<Intervention>> PostIntervention(Intervention intervention)
+        {
+            _context.Interventions.Add(intervention);
+            await _context.SaveChangesAsync();
 
-        //     return CreatedAtAction("GetIntervention", new { id = intervention.Id }, intervention);
-        // }
+            return CreatedAtAction("GetIntervention", new { id = intervention.Id }, intervention);
+        }
 
         // // DELETE: api/Intervention/5
         // [HttpDelete("{id}")]

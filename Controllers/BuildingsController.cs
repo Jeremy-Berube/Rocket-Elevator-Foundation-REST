@@ -72,16 +72,16 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
         //     return NoContent();
         // }
 
-        // // POST: api/Buildings
-        // // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        // [HttpPost]
-        // public async Task<ActionResult<Building>> PostBuilding(Building building)
-        // {
-        //     _context.Buildings.Add(building);
-        //     await _context.SaveChangesAsync();
+        // POST: api/Buildings
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Building>> PostBuilding(Building building)
+        {
+            _context.Buildings.Add(building);
+            await _context.SaveChangesAsync();
 
-        //     return CreatedAtAction("GetBuilding", new { id = building.Id }, building);
-        // }
+            return CreatedAtAction("GetBuilding", new { id = building.Id }, building);
+        }
 
         // // DELETE: api/Buildings/5
         // [HttpDelete("{id}")]
@@ -100,16 +100,18 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
         // }
 
         [HttpGet("{CustomerId}")]
-        public async Task<ActionResult<IEnumerable<Building>>> CustomerBuilding(string CustomerId)
+        public async Task<ActionResult<IEnumerable<long>>> CustomerBuilding(string CustomerId, long Id)
         {
             var build = await _context.Buildings.ToListAsync();
-            var buildingList = new List<Building>();
+            var buildingList = new List<long>();
 
-            foreach(Building buildings in build)
+
+            foreach(Building building in build)
             {
-                if(buildings.CustomerId.ToString()== CustomerId)
+                if(building.CustomerId.ToString()== CustomerId)
                 {
-                    buildingList.Add(buildings);
+                    
+                    buildingList.Add(building.Id);
                 }
             }
             return buildingList;

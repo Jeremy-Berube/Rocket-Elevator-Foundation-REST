@@ -28,16 +28,16 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
         }
 
         [HttpGet("{ColumnId}")]
-        public async Task<ActionResult<IEnumerable<Elevator>>> BatteryColumn(string ColumnId)
+        public async Task<ActionResult<IEnumerable<long>>> BatteryColumn(string ColumnId)
         {
             var elev = await _context.Elevators.ToListAsync();
-            var elevatorList = new List<Elevator>();
+            var elevatorList = new List<long>();
 
             foreach(Elevator elevators  in elev)
             {
                 if(elevators.ColumnId.ToString()== ColumnId)
                 {
-                    elevatorList.Add(elevators);
+                    elevatorList.Add(elevators.Id);
                 }
             }
             return elevatorList;
