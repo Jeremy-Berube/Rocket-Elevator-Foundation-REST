@@ -26,54 +26,6 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
         {
             return await _context.Buildings.ToListAsync();
         }
-
-        // GET: api/Buildings/5
-        // [HttpGet("{id}")]
-        // public async Task<ActionResult<Building>> GetBuilding(long id)
-        // {
-        //     var building = await _context.Buildings.FindAsync(id);
-
-        //     if (building == null)
-        //     {
-        //         return NotFound();
-        //     }
-
-        //     return building;
-        // }
-
-        // // PUT: api/Buildings/5
-        // // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> PutBuilding(long id, Building building)
-        // {
-        //     if (id != building.Id)
-        //     {
-        //         return BadRequest();
-        //     }
-
-        //     _context.Entry(building).State = EntityState.Modified;
-
-        //     try
-        //     {
-        //         await _context.SaveChangesAsync();
-        //     }
-        //     catch (DbUpdateConcurrencyException)
-        //     {
-        //         if (!BuildingExists(id))
-        //         {
-        //             return NotFound();
-        //         }
-        //         else
-        //         {
-        //             throw;
-        //         }
-        //     }
-
-        //     return NoContent();
-        // }
-
-        // POST: api/Buildings
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Building>> PostBuilding(Building building)
         {
@@ -82,22 +34,6 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
 
             return CreatedAtAction("GetBuilding", new { id = building.Id }, building);
         }
-
-        // // DELETE: api/Buildings/5
-        // [HttpDelete("{id}")]
-        // public async Task<IActionResult> DeleteBuilding(long id)
-        // {
-        //     var building = await _context.Buildings.FindAsync(id);
-        //     if (building == null)
-        //     {
-        //         return NotFound();
-        //     }
-
-        //     _context.Buildings.Remove(building);
-        //     await _context.SaveChangesAsync();
-
-        //     return NoContent();
-        // }
 
         [HttpGet("{CustomerId}")]
         public async Task<ActionResult<IEnumerable<long>>> CustomerBuilding(string CustomerId, long Id)
@@ -111,9 +47,10 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
                 if(building.CustomerId.ToString()== CustomerId)
                 {
                     
-                    buildingList.Add(building.Id);
+                    buildingList.Add(building.Id);                   
                 }
             }
+            System.Console.WriteLine(buildingList);
             return buildingList;
         }
         private bool BuildingExists(long id)
