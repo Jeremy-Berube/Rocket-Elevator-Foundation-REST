@@ -27,6 +27,7 @@ namespace Rocket_Elevator_Foundation_REST.Models
         public long? AddressId { get; set; }
 
         public virtual Address Address { get; set; }
+        public virtual User User { get; set; }
         public virtual ICollection<Building> Buildings { get; set; }
         public virtual ICollection<Intervention> Interventions { get; set; }
     }

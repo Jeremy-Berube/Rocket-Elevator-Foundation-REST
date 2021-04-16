@@ -8,7 +8,6 @@ namespace Rocket_Elevator_Foundation_REST.Models
 {
     public partial class RailsApp_developmentContext : DbContext
     {
-
         public RailsApp_developmentContext()
         {
         }
@@ -21,9 +20,15 @@ namespace Rocket_Elevator_Foundation_REST.Models
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<ArInternalMetadatum> ArInternalMetadata { get; set; }
         public virtual DbSet<Battery> Batteries { get; set; }
+        public virtual DbSet<BlazerAudit> BlazerAudits { get; set; }
+        public virtual DbSet<BlazerCheck> BlazerChecks { get; set; }
+        public virtual DbSet<BlazerDashboard> BlazerDashboards { get; set; }
+        public virtual DbSet<BlazerDashboardQuery> BlazerDashboardQueries { get; set; }
+        public virtual DbSet<BlazerQuery> BlazerQueries { get; set; }
         public virtual DbSet<Building> Buildings { get; set; }
         public virtual DbSet<BuildingDetail> BuildingDetails { get; set; }
         public virtual DbSet<Column> Columns { get; set; }
+        public virtual DbSet<Contract> Contracts { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Elevator> Elevators { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
@@ -31,11 +36,13 @@ namespace Rocket_Elevator_Foundation_REST.Models
         public virtual DbSet<Lead> Leads { get; set; }
         public virtual DbSet<Quote> Quotes { get; set; }
         public virtual DbSet<SchemaMigration> SchemaMigrations { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseMySQL("server=localhost;user=root;password=nuagedoris9;port=3306;database=RailsApp_development;");
             }
         }
@@ -162,6 +169,147 @@ namespace Rocket_Elevator_Foundation_REST.Models
                     .HasConstraintName("fk_rails_ceeeaf55f7");
             });
 
+            modelBuilder.Entity<BlazerAudit>(entity =>
+            {
+                entity.ToTable("blazer_audits");
+
+                entity.HasIndex(e => e.QueryId, "index_blazer_audits_on_query_id");
+
+                entity.HasIndex(e => e.UserId, "index_blazer_audits_on_user_id");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.DataSource)
+                    .HasMaxLength(255)
+                    .HasColumnName("data_source");
+
+                entity.Property(e => e.QueryId)
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("query_id");
+
+                entity.Property(e => e.Statement).HasColumnName("statement");
+
+                entity.Property(e => e.UserId)
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("user_id");
+            });
+
+            modelBuilder.Entity<BlazerCheck>(entity =>
+            {
+                entity.ToTable("blazer_checks");
+
+                entity.HasIndex(e => e.CreatorId, "index_blazer_checks_on_creator_id");
+
+                entity.HasIndex(e => e.QueryId, "index_blazer_checks_on_query_id");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.CheckType)
+                    .HasMaxLength(255)
+                    .HasColumnName("check_type");
+
+                entity.Property(e => e.CreatorId)
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("creator_id");
+
+                entity.Property(e => e.Emails).HasColumnName("emails");
+
+                entity.Property(e => e.Message).HasColumnName("message");
+
+                entity.Property(e => e.QueryId)
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("query_id");
+
+                entity.Property(e => e.Schedule)
+                    .HasMaxLength(255)
+                    .HasColumnName("schedule");
+
+                entity.Property(e => e.SlackChannels).HasColumnName("slack_channels");
+
+                entity.Property(e => e.State)
+                    .HasMaxLength(255)
+                    .HasColumnName("state");
+            });
+
+            modelBuilder.Entity<BlazerDashboard>(entity =>
+            {
+                entity.ToTable("blazer_dashboards");
+
+                entity.HasIndex(e => e.CreatorId, "index_blazer_dashboards_on_creator_id");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.CreatorId)
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("creator_id");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(255)
+                    .HasColumnName("name");
+            });
+
+            modelBuilder.Entity<BlazerDashboardQuery>(entity =>
+            {
+                entity.ToTable("blazer_dashboard_queries");
+
+                entity.HasIndex(e => e.DashboardId, "index_blazer_dashboard_queries_on_dashboard_id");
+
+                entity.HasIndex(e => e.QueryId, "index_blazer_dashboard_queries_on_query_id");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.DashboardId)
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("dashboard_id");
+
+                entity.Property(e => e.Position)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("position");
+
+                entity.Property(e => e.QueryId)
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("query_id");
+            });
+
+            modelBuilder.Entity<BlazerQuery>(entity =>
+            {
+                entity.ToTable("blazer_queries");
+
+                entity.HasIndex(e => e.CreatorId, "index_blazer_queries_on_creator_id");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.CreatorId)
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("creator_id");
+
+                entity.Property(e => e.DataSource)
+                    .HasMaxLength(255)
+                    .HasColumnName("data_source");
+
+                entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(255)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.Statement).HasColumnName("statement");
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(255)
+                    .HasColumnName("status");
+            });
+
             modelBuilder.Entity<Building>(entity =>
             {
                 entity.ToTable("buildings");
@@ -283,6 +431,20 @@ namespace Rocket_Elevator_Foundation_REST.Models
                     .HasConstraintName("fk_rails_021eb14ac4");
             });
 
+            modelBuilder.Entity<Contract>(entity =>
+            {
+                entity.ToTable("contracts");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.Address)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("address");
+            });
+
             modelBuilder.Entity<Customer>(entity =>
             {
                 entity.ToTable("customers");
@@ -341,6 +503,11 @@ namespace Rocket_Elevator_Foundation_REST.Models
                     .WithMany(p => p.Customers)
                     .HasForeignKey(d => d.AddressId)
                     .HasConstraintName("fk_rails_3f9404ba26");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Customers)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("fk_rails_9917eeaf5d");
             });
 
             modelBuilder.Entity<Elevator>(entity =>
@@ -426,6 +593,11 @@ namespace Rocket_Elevator_Foundation_REST.Models
                 entity.Property(e => e.UserId)
                     .HasColumnType("bigint(20)")
                     .HasColumnName("user_id");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Employees)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("fk_rails_dcfd3d4fc3");
             });
 
             modelBuilder.Entity<Intervention>(entity =>
@@ -447,14 +619,6 @@ namespace Rocket_Elevator_Foundation_REST.Models
                 entity.Property(e => e.Id)
                     .HasColumnType("bigint(20)")
                     .HasColumnName("id");
-
-                entity.Property(e => e.intervention_start)
-                    .HasColumnType("DateTime")
-                    .HasColumnName("intervention_start");
-
-                entity.Property(e => e.intervention_end)
-                    .HasColumnType("DateTime")
-                    .HasColumnName("intervention_end");
 
                 entity.Property(e => e.Author)
                     .HasColumnType("bigint(20)")
@@ -665,6 +829,49 @@ namespace Rocket_Elevator_Foundation_REST.Models
                 entity.Property(e => e.Version)
                     .HasMaxLength(255)
                     .HasColumnName("version");
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("users");
+
+                entity.HasIndex(e => e.Email, "index_users_on_email")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.ResetPasswordToken, "index_users_on_reset_password_token")
+                    .IsUnique();
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("email")
+                    .HasDefaultValueSql("''");
+
+                entity.Property(e => e.EmployeeRole)
+                    .HasColumnName("employee_role")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.EncryptedPassword)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("encrypted_password")
+                    .HasDefaultValueSql("''");
+
+                entity.Property(e => e.ResetPasswordToken)
+                    .HasMaxLength(255)
+                    .HasColumnName("reset_password_token");
+
+                entity.Property(e => e.SuperadminRole)
+                    .HasColumnName("superadmin_role")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.UserRole)
+                    .HasColumnName("user_role")
+                    .HasDefaultValueSql("'1'");
             });
 
             OnModelCreatingPartial(modelBuilder);

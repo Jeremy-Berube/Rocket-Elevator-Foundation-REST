@@ -7,20 +7,20 @@ namespace Rocket_Elevator_Foundation_REST.Models
 {
     public partial class Intervention
     {
-
         public long Id { get; set; }
         public long Author { get; set; }
         public string Result { get; set; }
         public string Report { get; set; }
         public string Status { get; set; }
-        public DateTime? intervention_start { get; set; }
-        public DateTime? intervention_end { get; set; }
         public long CustomerId { get; set; }
         public long BuildingId { get; set; }
         public long? BatteryId { get; set; }
         public long? ColumnId { get; set; }
         public long? ElevatorId { get; set; }
         public long? EmployeeId { get; set; }
+
+        public DateTime intervention_start {get; set;}
+        public DateTime intervention_end {get; set;}
 
         public virtual Battery Battery { get; set; }
         public virtual Building Building { get; set; }
