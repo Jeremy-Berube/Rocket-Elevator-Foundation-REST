@@ -32,7 +32,7 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
                 return Ok(true);
                 }
             }
-            return Ok(null);
+            return Ok(false);
         }
 
         // PUT: api/Employees/5
