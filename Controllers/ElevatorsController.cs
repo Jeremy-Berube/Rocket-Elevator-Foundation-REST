@@ -21,10 +21,14 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
         }
 
         // GET: api/Elevators
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Elevator>>> GetElevators()
+        [HttpGet("non-operational")]
+        public IEnumerable<Elevator> GetElevators()
         {
-            return await _context.Elevators.ToListAsync();
+            IQueryable<Elevator> Elevators = from list_elev in _context.Elevators
+                                             where list_elev.Status != "Active"
+                                             select list_elev;
+
+            return Elevators.ToList();
         }
 
         [HttpGet("{ColumnId}")]
@@ -42,6 +46,8 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
             }
             return elevatorList;
         }
+
+         
 
         // GET: api/Elevators/5
         // [HttpGet("{id}")]
