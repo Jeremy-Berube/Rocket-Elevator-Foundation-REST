@@ -42,7 +42,6 @@ namespace Rocket_Elevator_Foundation_REST.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseMySQL("server=localhost;user=root;password=nuagedoris9;port=3306;database=RailsApp_development;");
             }
         }
@@ -574,7 +573,7 @@ namespace Rocket_Elevator_Foundation_REST.Models
                     .HasColumnType("bigint(20)")
                     .HasColumnName("id");
 
-                entity.Property(e => e.Email)
+                entity.Property(e => e.email)
                     .HasMaxLength(255)
                     .HasColumnName("email");
 

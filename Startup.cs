@@ -18,6 +18,7 @@ namespace Rocket_Elevator_Foundation_REST
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -34,6 +35,14 @@ namespace Rocket_Elevator_Foundation_REST
                 dbContextOptions.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
             services.AddControllers();
+             services.AddCors(options =>
+        {
+            options.AddPolicy(name: MyAllowSpecificOrigins,
+                              builder =>
+                              {
+                                  builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
+                              });
+        });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Rocket_Elevator_Foundation_REST", Version = "v1" });
@@ -50,11 +59,13 @@ namespace Rocket_Elevator_Foundation_REST
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Rocket_Elevator_Foundation_REST v1"));
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseEndpoints(endpoints =>
             {

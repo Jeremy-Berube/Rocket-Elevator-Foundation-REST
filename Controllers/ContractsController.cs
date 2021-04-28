@@ -20,7 +20,7 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
             _context = context;
         }
        // POST: api/Contracts
-
+        // [EnableCors]
         [HttpPost]
         public async Task<ActionResult<Contract>> PostContract(Contract contract)
         {

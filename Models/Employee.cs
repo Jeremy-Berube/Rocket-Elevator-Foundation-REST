@@ -17,7 +17,7 @@ namespace Rocket_Elevator_Foundation_REST.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Title { get; set; }
-        public string Email { get; set; }
+        public string email { get; set; }
         public long? UserId { get; set; }
 
         public virtual User User { get; set; }
