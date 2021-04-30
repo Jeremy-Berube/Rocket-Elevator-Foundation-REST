@@ -22,11 +22,7 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
         }
 
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Elevator>>> GetElevator()
-        {
-            return await _context.Elevators.ToListAsync();
-        }
+        
         // GET: api/Employees
         [HttpGet("{email}")]
         public async Task<ActionResult<Employee>> GetEmployeeEmail(string email)

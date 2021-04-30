@@ -20,6 +20,14 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
             _context = context;
         }
 
+        
+        
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Elevator>>> GetElevator()
+        {
+            return await _context.Elevators.ToListAsync();
+        }
+
         // GET: api/Elevators
         [HttpGet("non-operational")]
         public IEnumerable<Elevator> GetElevators()
