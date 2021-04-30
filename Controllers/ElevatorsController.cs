@@ -39,33 +39,31 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
         }
         // PUT: api/Elevators/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutElevator(long id, Elevator elevator)
+[HttpPut("{id}")]
+        public async Task<IActionResult> PutmodifyElevatorsStatus(long id, [FromBody] Elevator body)
         {
-            if (id != elevator.Id)
-            {
+            //check body 
+            if (body.Status == null)
                 return BadRequest();
-            }
-
-            _context.Entry(elevator).State = EntityState.Modified;
-
+            //find corresponding elevator 
+            var elevator = await _context.Elevators.FindAsync(id);
+            //change status 
+            elevator.Status = body.Status;          
             try
             {
+                //save change 
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
+                //catch error - elevetor doesn't exist 
                 if (!ElevatorExists(id))
-                {
                     return NotFound();
-                }
                 else
-                {
                     throw;
-                }
             }
-
-            return NoContent();
+            //return succeed message 
+            return new OkObjectResult("success");
         }
                private bool ElevatorExists(long id)
         {
