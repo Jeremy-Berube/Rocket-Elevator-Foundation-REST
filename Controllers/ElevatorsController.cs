@@ -20,17 +20,16 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
             _context = context;
         }
 
-        
-        
+        // GET: api/Elevators
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Elevator>>> GetElevator()
+        public async Task<ActionResult<IEnumerable<Elevator>>> GetElevators()
         {
             return await _context.Elevators.ToListAsync();
         }
 
-        // GET: api/Elevators
-        [HttpGet("non-operational")]
-        public IEnumerable<Elevator> GetElevators()
+        // GET: api/Elevators/5
+         [HttpGet("non-operational")]
+        public IEnumerable<Elevator> GetNonOperationalElevators()
         {
             IQueryable<Elevator> Elevators = from list_elev in _context.Elevators
                                              where list_elev.Status != "Active"
@@ -38,40 +37,7 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
 
             return Elevators.ToList();
         }
-
-        [HttpGet("{ColumnId}")]
-        public async Task<ActionResult<IEnumerable<long>>> BatteryColumn(string ColumnId)
-        {
-            var elev = await _context.Elevators.ToListAsync();
-            var elevatorList = new List<long>();
-
-            foreach(Elevator elevators  in elev)
-            {
-                if(elevators.ColumnId.ToString()== ColumnId)
-                {
-                    elevatorList.Add(elevators.Id);
-                }
-            }
-            return elevatorList;
-        }
-
-         
-
-        // GET: api/Elevators/5
-        // [HttpGet("{id}")]
-        // public async Task<ActionResult<Elevator>> GetElevator(long id)
-        // {
-        //     var elevator = await _context.Elevators.FindAsync(id);
-
-        //     if (elevator == null)
-        //     {
-        //         return NotFound();
-        //     }
-
-        //     return elevator;
-        // }
-
-       // PUT: api/Columns/5
+        // PUT: api/Elevators/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutElevator(long id, Elevator elevator)
@@ -101,35 +67,7 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
 
             return NoContent();
         }
-
-        // // POST: api/Elevators
-        // // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        // [HttpPost]
-        // public async Task<ActionResult<Elevator>> PostElevator(Elevator elevator)
-        // {
-        //     _context.Elevators.Add(elevator);
-        //     await _context.SaveChangesAsync();
-
-        //     return CreatedAtAction("GetElevator", new { id = elevator.Id }, elevator);
-        // }
-
-        // // DELETE: api/Elevators/5
-        // [HttpDelete("{id}")]
-        // public async Task<IActionResult> DeleteElevator(long id)
-        // {
-        //     var elevator = await _context.Elevators.FindAsync(id);
-        //     if (elevator == null)
-        //     {
-        //         return NotFound();
-        //     }
-
-        //     _context.Elevators.Remove(elevator);
-        //     await _context.SaveChangesAsync();
-
-        //     return NoContent();
-        // }
-
-        private bool ElevatorExists(long id)
+               private bool ElevatorExists(long id)
         {
             return _context.Elevators.Any(e => e.Id == id);
         }
