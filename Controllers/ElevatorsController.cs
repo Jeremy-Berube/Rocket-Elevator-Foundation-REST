@@ -63,36 +63,36 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
         //     return elevator;
         // }
 
-        // // PUT: api/Elevators/5
-        // // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> PutElevator(long id, Elevator elevator)
-        // {
-        //     if (id != elevator.Id)
-        //     {
-        //         return BadRequest();
-        //     }
+        // PUT: api/Elevators/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutElevator(long id, Elevator elevator)
+        {
+            if (id != elevator.Id)
+            {
+                return BadRequest();
+            }
 
-        //     _context.Entry(elevator).State = EntityState.Modified;
+            _context.Entry(elevator).State = EntityState.Modified;
 
-        //     try
-        //     {
-        //         await _context.SaveChangesAsync();
-        //     }
-        //     catch (DbUpdateConcurrencyException)
-        //     {
-        //         if (!ElevatorExists(id))
-        //         {
-        //             return NotFound();
-        //         }
-        //         else
-        //         {
-        //             throw;
-        //         }
-        //     }
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ElevatorExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-        //     return NoContent();
-        // }
+            return NoContent();
+        }
 
         // // POST: api/Elevators
         // // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
