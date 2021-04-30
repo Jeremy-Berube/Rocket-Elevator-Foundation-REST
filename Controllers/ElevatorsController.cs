@@ -27,6 +27,22 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
             return await _context.Elevators.ToListAsync();
         }
 
+          [HttpGet("{ElevatorId}")]
+        public async Task<ActionResult<IEnumerable<long>>> Elevators(string ElevatorId)
+        {
+            var el = await _context.Elevators.ToListAsync();
+            var elevatorList = new List<long>();
+
+            foreach(Elevator elevators in el)
+            {
+                if(elevators.Id.ToString()== ElevatorId)
+                {
+                    elevatorList.Add(elevators.Id);
+                }
+            }
+            return elevatorList;
+        }
+
         // GET: api/Elevators/5
          [HttpGet("non-operational")]
         public IEnumerable<Elevator> GetNonOperationalElevators()
@@ -39,7 +55,7 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
         }
         // PUT: api/Elevators/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-[HttpPut("{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> PutmodifyElevatorsStatus(long id, [FromBody] Elevator body)
         {
             //check body 
