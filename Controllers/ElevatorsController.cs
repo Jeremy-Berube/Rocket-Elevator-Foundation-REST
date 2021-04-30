@@ -63,7 +63,7 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
         //     return elevator;
         // }
 
-        // PUT: api/Elevators/5
+       // PUT: api/Columns/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutElevator(long id, Elevator elevator)
