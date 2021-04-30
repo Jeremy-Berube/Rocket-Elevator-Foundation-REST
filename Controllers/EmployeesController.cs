@@ -15,11 +15,18 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
     {
         private readonly RailsApp_developmentContext _context;
 
+
         public EmployeesController(RailsApp_developmentContext context)
         {
             _context = context;
         }
 
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Elevator>>> GetElevator()
+        {
+            return await _context.Elevators.ToListAsync();
+        }
         // GET: api/Employees
         [HttpGet("{email}")]
         public async Task<ActionResult<Employee>> GetEmployeeEmail(string email)
@@ -37,34 +44,6 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
 
         // PUT: api/Employees/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee(long id, Employee employee)
-        {
-            if (id != employee.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(employee).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EmployeeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
 
         private bool EmployeeExists(long id)
         {
