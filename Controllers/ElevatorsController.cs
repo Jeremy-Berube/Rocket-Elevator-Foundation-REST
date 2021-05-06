@@ -28,7 +28,7 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
         }
 
           [HttpGet("{ElevatorId}")]
-        public async Task<ActionResult<IEnumerable<long>>> Elevators(string ElevatorId)
+        public async Task<ActionResult<IEnumerable<long>>> Elevator(string ElevatorId)
         {
             var el = await _context.Elevators.ToListAsync();
             var elevatorList = new List<long>();
