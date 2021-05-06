@@ -23,7 +23,7 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
 
         // GET: api/Intervention
         [HttpGet]
-         public ActionResult<IEnumerable<Intervention>> Getinterventions()
+         public ActionResult<IEnumerable<Intervention>> GetInterventions()
         {
             List<Intervention> allInterventions = _context.Interventions.ToList();
             List<Intervention> pendingInterventions = new List<Intervention>();
