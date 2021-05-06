@@ -54,14 +54,14 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
 
         // POST: api/Customer
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        // [HttpPost]
-        // public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
-        // {
-        //     _context.Customers.Add(customer);
-        //     await _context.SaveChangesAsync();
+        [HttpPost]
+        public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
+        {
+            _context.Customers.Add(customer);
+            await _context.SaveChangesAsync();
 
-        //     return CreatedAtAction("GetCustomer", new { id = customer.Id }, customer);
-        // }
+            return CreatedAtAction("GetCustomer", new { id = customer.Id }, customer);
+        }
 
         // // DELETE: api/Customer/5
         // [HttpDelete("{id}")]

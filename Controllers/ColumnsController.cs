@@ -89,14 +89,14 @@ namespace Rocket_Elevator_Foundation_REST.Controllers
 
         // // POST: api/Columns
         // // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        // [HttpPost]
-        // public async Task<ActionResult<Column>> PostColumn(Column column)
-        // {
-        //     _context.Columns.Add(column);
-        //     await _context.SaveChangesAsync();
+        [HttpPost]
+        public async Task<ActionResult<Column>> PostColumn(Column column)
+        {
+            _context.Columns.Add(column);
+            await _context.SaveChangesAsync();
 
-        //     return CreatedAtAction("GetColumn", new { id = column.Id }, column);
-        // }
+            return CreatedAtAction("GetColumns", new { id = column.Id }, column);
+        }
 
         // // DELETE: api/Columns/5
         // [HttpDelete("{id}")]
